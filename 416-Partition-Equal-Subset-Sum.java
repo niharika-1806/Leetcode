@@ -1,31 +1,28 @@
 class Solution {
     public boolean canPartition(int[] nums) {
         int n=nums.length;
-
         int sum=0;
-        for(int num: nums){
-            sum+=num;
-        }
-        int target=sum/2;
 
+        for(int x: nums){
+            sum+=x;
+        }
         if(sum%2!=0)
         return false;
+        int target=sum/2;
 
-        // can we make exactly sum equal to target using first i numbers
-        boolean dp[][]=new boolean[n+1][target+1];
+        boolean[][]dp=new boolean[n+1][target+1];
         dp[0][0]=true;
+
         for(int i=1;i<=n;i++){
-            for(int s=0;s<=target;s++){
-                // if the current number is less than the required sum then move ahead
-                if(nums[i-1]<=s){
-                    dp[i][s]= dp[i-1][s] || dp[i-1][s-nums[i-1]];
+            for(int j=0;j<=target;j++){
+                boolean take=false;
+                if(j>=nums[i-1]){
+                    take=dp[i-1][j-nums[i-1]];
                 }
-                // otherwise fill the previous answer
-                else{
-                    dp[i][s]=dp[i-1][s];
-                }
+                boolean skip=dp[i-1][j];
+
+                dp[i][j]=take || skip;
             }
-            
         }
         return dp[n][target];
     }
