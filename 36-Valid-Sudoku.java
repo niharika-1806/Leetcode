@@ -16,15 +16,14 @@ class Solution {
                 char num=board[i][j];
                 int k=(i/3)*3 + (j/3);
 
-                if(num=='.')
-                continue;
+                if(num!='.'){
+                    if(rows[i].contains(num)|| cols[j].contains(num)|| box[k].contains(num))
+                        return false;
 
-                if(rows[i].contains(num)|| cols[j].contains(num)|| box[k].contains(num))
-                return false;
-
-                rows[i].add(num);
-                cols[j].add(num);
-                box[k].add(num);
+                    rows[i].add(num);
+                    cols[j].add(num);
+                    box[k].add(num);
+                }
             }
         }
         return true;
