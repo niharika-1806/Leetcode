@@ -14,11 +14,11 @@
  * }
  */
 class Solution {
-    List<Integer>result=new ArrayList<>();
-
+    List<Integer>result = new ArrayList<>();
     public void preorder(TreeNode root){
         if(root==null)
-        return;
+        return ;
+
         result.add(root.val);
         preorder(root.left);
         preorder(root.right);
@@ -27,4 +27,6 @@ class Solution {
         preorder(root);
         return result;
     }
+
+    
 }
