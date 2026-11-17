@@ -1,6 +1,6 @@
 class Solution {
     public int networkDelayTime(int[][] times, int n, int k) {
-        List<List<int[]>>adj=new ArrayList<>();
+        List<List<int[]>>adj = new ArrayList<>();
         for(int i=0;i<=n;i++){
             adj.add(new ArrayList<>());
         }
@@ -13,26 +13,28 @@ class Solution {
         }
         int dist[]=new int[n+1];
         Arrays.fill(dist,Integer.MAX_VALUE);
-        dist[k]=0;
 
-        PriorityQueue<int[]>pq=new PriorityQueue<>((a,b) -> a[0]-b[0]);
-        pq.add(new int[]{0,k});
+        PriorityQueue<int[]>pq=new PriorityQueue<>(
+            (a,b) -> Integer.compare(a[0],b[0])
+        );
+        dist[k]=0;
+        pq.offer(new int[]{0,k});
 
         while(!pq.isEmpty()){
             int curr[]=pq.poll();
-            int currdist=curr[0];
+            int distance=curr[0];
             int node=curr[1];
 
-            if(currdist>dist[node])
+            if(distance> dist[node])
             continue;
 
-            for(int neighbour[]: adj.get(node)){
-                int nextnode=neighbour[0];
-                int weight=neighbour[1];
+            for(int neighbours[]: adj.get(node)){
+                int neighbour=neighbours[0];
+                int weight=neighbours[1];
 
-                if(dist[node]+weight < dist[nextnode]){
-                    dist[nextnode]=dist[node]+weight;
-                    pq.add(new int[]{dist[nextnode],nextnode});
+                if(distance+weight< dist[neighbour]){
+                    dist[neighbour]=distance+weight;
+                    pq.offer(new int[]{dist[neighbour],neighbour});
                 }
             }
         }
@@ -40,9 +42,10 @@ class Solution {
         for(int i=1;i<=n;i++){
             if(dist[i]==Integer.MAX_VALUE)
             return -1;
+
             maxdist=Math.max(maxdist,dist[i]);
         }
         return maxdist;
+
     }
-    
 }
